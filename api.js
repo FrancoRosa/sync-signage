@@ -34,7 +34,7 @@ s.on("message", (msg, rinfo) => {
   console.log(`${rinfo.address}:${rinfo.port} >> ${msg}`);
   const other = JSON.parse(msg);
   if (other.id < id) {
-    if (other.file !== current.file) {
+    if (other.msg.file !== current.file) {
       if (current.video) stopVideo();
       else hideImage();
     }
@@ -47,12 +47,20 @@ const broadcast = (msg) => {
 
 const stopVideo = () => {
   console.log("killing video");
-  sys.execSync(`pkill -12 mpv`);
+  try {
+    sys.execSync(`pkill -12 mpv`);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const hideImage = () => {
   console.log("killing image");
-  sys.execSync(`pkill -12 eog`);
+  try {
+    sys.execSync(`pkill -12 eog`);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const playVideo = (file, timed, timeout) => {
