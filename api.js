@@ -3,7 +3,7 @@ const sys = require("child_process");
 
 const multicast = "225.0.0.1";
 const id = Date.now();
-const fullscreen = false;
+const fullscreen = true;
 const playlist = [
   { video: true, file: "vid1.mp4", timeout: 3, timed: true },
   { video: false, file: "img1.png", timeout: 5, timed: true },
