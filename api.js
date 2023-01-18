@@ -9,6 +9,14 @@ const playlist = [
   { video: false, file: "img1.png", timeout: 5, timed: true },
   { video: true, file: "vid2.mp4", timeout: 5, timed: true },
   { video: false, file: "img2.png", timeout: 5, timed: true },
+  { video: true, file: "vid1.mp4", timeout: 3, timed: true },
+  { video: false, file: "img1.png", timeout: 5, timed: true },
+  { video: true, file: "vid2.mp4", timeout: 5, timed: true },
+  { video: false, file: "img2.png", timeout: 5, timed: true },
+  { video: true, file: "vid1.mp4", timeout: 3, timed: true },
+  { video: false, file: "img1.png", timeout: 5, timed: true },
+  { video: true, file: "vid2.mp4", timeout: 5, timed: true },
+  { video: false, file: "img2.png", timeout: 5, timed: true },
 ];
 
 let current;
@@ -26,7 +34,7 @@ s.on("message", (msg, rinfo) => {
   console.log(`${rinfo.address}:${rinfo.port} >> ${msg}`);
   const other = JSON.parse(msg);
   if (other.id < id) {
-    if (other.file != current.file) {
+    if (other.file !== current.file) {
       if (current.video) stopVideo();
       else hideImage();
     }
