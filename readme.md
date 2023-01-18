@@ -7,6 +7,7 @@
 mpv player is required, could be installed with:
 
 ```bash
+sudo apt update
 sudo apt install mpv
 sudo apt install eog
 ```
