@@ -3,7 +3,7 @@ const sys = require("child_process");
 
 const multicast = "225.0.0.1";
 const id = Date.now();
-const fullscreen = false;
+const fullscreen = true;
 const playlist = require("./paylist");
 
 let current;
