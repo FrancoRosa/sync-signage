@@ -3,11 +3,11 @@ const sys = require("child_process");
 
 const multicast = "225.0.0.1";
 const id = Date.now();
-const fullscreen = true;
+const fullscreen = false;
 const playlist = require("./paylist");
 
 let current;
-let parent;
+let other;
 let sync = true;
 
 const mediaDir = "media/";
@@ -21,7 +21,7 @@ s.bind(8001, () => {
 
 s.on("message", (msg, rinfo) => {
   console.log(`${rinfo.address}:${rinfo.port} >> ${msg}`);
-  const other = JSON.parse(msg);
+  other = JSON.parse(msg);
   if (other.id < id) {
     if (other.msg.id !== current.id) {
       sync = false;
