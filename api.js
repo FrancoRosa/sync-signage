@@ -4,22 +4,11 @@ const sys = require("child_process");
 const multicast = "225.0.0.1";
 const id = Date.now();
 const fullscreen = true;
-const playlist = [
-  { video: true, file: "vid1.mp4", timeout: 3, timed: true },
-  { video: false, file: "img1.png", timeout: 5, timed: true },
-  { video: true, file: "vid2.mp4", timeout: 5, timed: true },
-  { video: false, file: "img2.png", timeout: 5, timed: true },
-  { video: true, file: "vid1.mp4", timeout: 3, timed: true },
-  { video: false, file: "img1.png", timeout: 5, timed: true },
-  { video: true, file: "vid2.mp4", timeout: 5, timed: true },
-  { video: false, file: "img2.png", timeout: 5, timed: true },
-  { video: true, file: "vid1.mp4", timeout: 3, timed: true },
-  { video: false, file: "img1.png", timeout: 5, timed: true },
-  { video: true, file: "vid2.mp4", timeout: 5, timed: true },
-  { video: false, file: "img2.png", timeout: 5, timed: true },
-];
+const playlist = require("./paylist");
 
 let current;
+let parent;
+let sync = true;
 
 const mediaDir = "media/";
 
@@ -34,7 +23,8 @@ s.on("message", (msg, rinfo) => {
   console.log(`${rinfo.address}:${rinfo.port} >> ${msg}`);
   const other = JSON.parse(msg);
   if (other.id < id) {
-    if (other.msg.file !== current.file) {
+    if (other.msg.id !== current.id) {
+      sync = false;
       if (current.video) stopVideo();
       else hideImage();
     }
@@ -98,6 +88,11 @@ const handlePlaylist = async (playlist) => {
   for (const element of playlist) {
     const { video, file, timed, timeout } = element;
     current = element;
+    if (!sync) {
+      if (current.id != other.msg.id) continue;
+    } else {
+      sync = true;
+    }
     broadcast(element);
     if (video) {
       await playVideo(file, timed, timeout);
