@@ -40,7 +40,7 @@ const stopVideo = () => {
   try {
     sys.execSync(`pkill -12 mpv`);
   } catch (error) {
-    console.log(error);
+    console.log("... error killing");
   }
 };
 
@@ -49,7 +49,7 @@ const hideImage = () => {
   try {
     sys.execSync(`pkill -12 eog`);
   } catch (error) {
-    console.log(error);
+    console.log("... error killing");
   }
 };
 
@@ -89,9 +89,11 @@ const handlePlaylist = async (playlist) => {
     const { video, file, timed, timeout } = element;
     current = element;
     if (!sync) {
-      if (current.id != other.msg.id) continue;
-    } else {
-      sync = true;
+      if (current.id != other.msg.id) {
+        continue;
+      } else {
+        sync = true;
+      }
     }
     broadcast(element);
     if (video) {
